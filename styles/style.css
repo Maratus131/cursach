@@ -1,0 +1,131 @@
+body {
+    background-color: #FDF9F3;
+    font-family: 'Inter';
+}
+
+.navigation {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    align-items: center;
+    display: flex;
+    padding: 32px 32px;
+}
+
+.logoText {
+    font-size: 20px;
+    color: #1E3B57;
+    font-weight: 600;
+}
+
+.logo img {
+    width: 32px;
+    height: 32px;
+}
+
+.pagesLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 32px;
+}
+
+.pagesLinks a {
+    opacity: 55%;
+}
+
+.loginBtn {
+    background-color: #EE7D3C;
+    color: white;
+    border: 0;
+    font-size: 16px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-right: 32px;
+}
+
+.greetSection {
+    display: flex;
+}
+
+.greetMessage {
+    padding: 60px 32px;
+}
+
+.greetLogo {
+    font-size: 48px;
+    color: #1E3B57;
+    font-weight: 600;
+}
+
+.greetSection img {
+    padding: 50px 36px;
+}
+
+.petCare {
+    padding-top: 12px;
+    padding-bottom: 24px;
+    font-size: 17px;
+    opacity: 55%;
+}
+
+.startCareBtn {
+    background-color: #EE7D3C;
+    color: white;
+    border: 0;
+    font-size: 16px;
+    padding:12px 16px;
+    border-radius: 12px;
+}
+
+.offerSection {
+    padding: 32px;
+}
+
+.offerHeader {
+    font-size: 40px;
+    color: #1E3B57;
+    font-weight: 700;
+    text-align: center;
+}
+
+.offerCards {
+    display: flex;
+    justify-content: space-between;       
+    margin-top: 30px;
+    flex-wrap: wrap;               
+}
+
+.offerCard {
+    width: 362px;
+    height: 463px;
+    background-color: #F0ECE7;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    align-items: center;
+}
+
+.offerCard img {
+    width: 240px;
+    height: 234px;
+}
+
+.cardHeader {
+    color: #1E3B57;
+    font-size: 20px;
+    font-weight: 600;
+    align-self: flex-start;
+}
+
+.cardText {
+    font-size: 18px;
+    opacity: 55%;
+    text-align: left;
+}
