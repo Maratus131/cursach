@@ -1,6 +1,14 @@
+*{
+    box-sizing: border-box;
+}
+
 body {
     background-color: #FDF9F3;
     font-family: 'Inter';
+}
+
+main {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .navigation {
@@ -11,7 +19,7 @@ body {
     border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.logo {
+header .logo {
     align-items: center;
     display: flex;
     padding: 32px 32px;
@@ -72,6 +80,9 @@ body {
     padding-bottom: 24px;
     font-size: 17px;
     opacity: 55%;
+    width: 60%;
+    line-height: 145%;
+    letter-spacing: -0.5%;
 }
 
 .startCareBtn {
@@ -110,22 +121,47 @@ body {
     flex-direction: column;
     gap: 24px;
     align-items: center;
+    justify-content: space-between;
 }
 
 .offerCard img {
     width: 240px;
     height: 234px;
+    border-radius: 32px;
+    border: 8px solid white;
 }
 
 .cardHeader {
+    display: block;
     color: #1E3B57;
     font-size: 20px;
     font-weight: 600;
-    align-self: flex-start;
+    width: 100%;
+    padding-left: 20px;
+    padding-top: 20px;
 }
 
 .cardText {
     font-size: 18px;
     opacity: 55%;
-    text-align: left;
+    line-height: 145%;
+    letter-spacing: -0.5%;
+    padding-top: 20px;
+    padding-left: 20px;
+}
+
+footer nav {
+    padding: 32px;
+}
+
+.footerMenu {
+    opacity: 55%;
+    gap:32px;
+    display: flex;
+}
+
+footer .logo {
+    align-items: center;
+    display: flex;
+    padding-top: 16px;
 }
