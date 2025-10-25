@@ -59,6 +59,7 @@ header .logo {
 
 .greetSection {
     display: flex;
+    justify-content: space-between;
 }
 
 .greetMessage {
@@ -72,7 +73,7 @@ header .logo {
 }
 
 .greetSection img {
-    padding: 50px 36px;
+    padding: 50px 64px;
 }
 
 .petCare {
@@ -80,7 +81,7 @@ header .logo {
     padding-bottom: 24px;
     font-size: 17px;
     opacity: 55%;
-    width: 60%;
+    width: 450px;
     line-height: 145%;
     letter-spacing: -0.5%;
 }
@@ -108,7 +109,7 @@ header .logo {
 .offerCards {
     display: flex;
     justify-content: space-between;       
-    margin-top: 30px;
+    margin-top: 50px;
     flex-wrap: wrap;               
 }
 
@@ -129,6 +130,7 @@ header .logo {
     height: 234px;
     border-radius: 32px;
     border: 8px solid white;
+    margin-bottom: 20px;
 }
 
 .cardHeader {
