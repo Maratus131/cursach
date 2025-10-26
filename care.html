@@ -6,24 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles/reset.css">
     <link rel="stylesheet" href="styles/style.css">
-    <link rel="stylesheet" href="styles/care.css">
     <link href='https://fonts.googleapis.com/css?family=Inter' rel='stylesheet'>
-    <title>Care About Pets</title>
+    <title>AniTrack</title>
 </head>
 
 <body>
     <header>
         <nav class="navigation">
-            <div class="pagesLinks">
-                <div class="logo">
-                    <img src="img/logo.png">
-                    <span class="logoText">AniTrack</span>
-                </div>
-
+            <div class="logo">
+                <img src="img/logo.png">
+                <span class="logoText">AniTrack</span>
             </div>
-            <div>
-                <button class="myPets">Мои питомцы</button>
-            </div>
+            <button class="myPets btn btnOutline">Мои питомцы</button>
         </nav>
     </header>
     <main>
@@ -54,7 +48,65 @@
                     </div>
                 </div>
             </div>
-            <label class="addPet" for="modalToggle">+ Добавить питомца</label>
+            <label class="addPet btn btnPrimary" for="modalToggle">+ Добавить питомца</label>
+            <div>
+                <input type="checkbox" id="modalToggle" style="display:none;">
+                <div class="modal addPetModal">
+                    <label class="modalBg" for="modalToogle"></label>
+                    <div class="modalContent">
+                        <label for="modalToggle" class="modalClose">&times;</label>
+                        <h2>Добавить нового питомца</h2>
+                        <form class="modalForm">
+                            <div class="modalPhoto">
+                                <input type="file" id="petPhoto" name="petPhoto" style="display: none;">
+                                <label for="petPhoto" class="photoLabel">
+                                    <div class="uploadPhoto">
+                                        <img src="img/photo.png">
+                                        <span class="photoText">
+                                            <span class="photoTitle">Фото питомца</span>
+                                            <span class="photoHint">(нажмите или перетащите)</span>
+                                        </span>
+
+                                    </div>
+                                </label>
+                            </div>
+                            <div class="inputData">
+                                <label>Кличка</label>
+                                <input type="text" placeholder="Введите кличку">
+                            </div>
+                            <div class="inputData">
+                                <label>Вид</label>
+                                <input type="text" placeholder="Введите вид">
+                            </div>
+                            <div class="inputData">
+                                <label>Порода</label>
+                                <input type="text" placeholder="Введите породу">
+                            </div>
+                            <div class="inputData">
+                                <label>Дата рождения</label>
+                                <input type="date" placeholder="Введите дату рождения">
+                            </div>
+                            <div class="inputData">
+                                <label>Пол</label>
+                                <input type="text" placeholder="Введите пол">
+                            </div>
+                            <div class="inputData">
+                                <label>Стерилизован ли ваш питомец</label>
+                                <input type="text" placeholder="Введите да/нет">
+                            </div>
+                            <div class="inputData">
+                                <label>Чипирован ли ваш питомец</label>
+                                <input type="text" placeholder="Введите да/нет">
+                            </div>
+                            <div class="inputData">
+                                <label>Особые приметы</label>
+                                <textarea rows="4" cols="30" placeholder="Особые приметы"></textarea>
+                            </div>
+                            <button type="submit" class="submitForm btn btnPrimary">+ Добавить питомца</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </aside>
         <div class="mainContent">
             <div class="petTitle">
@@ -86,27 +138,27 @@
                 <div class="personalDiaryAndImages">
                     <div class="personalDiary">
                         <label for="noteModalToggle" class="addNote">+ Добавить запись в дневник</label>
-                        <div class="note">
-                            <div class="noteHeader">
+                        <div class="note card">
+                            <div class="cardHeader">
                                 24 октября 2025
                             </div>
-                            <div class="noteText">
+                            <div class="cardText">
                                 Сегодня купили новую игрушку, ему очень понравилась
                             </div>
                         </div>
-                        <div class="note">
-                            <div class="noteHeader">
+                        <div class="note card">
+                            <div class="cardHeader">
                                 21 октября 2025
                             </div>
-                            <div class="noteText">
+                            <div class="cardText">
                                 Аппетит появился, начал немного играть
                             </div>
                         </div>
-                        <div class="note">
-                            <div class="noteHeader">
+                        <div class="note card">
+                            <div class="cardHeader">
                                 20 октября 2025
                             </div>
-                            <div class="noteText">
+                            <div class="cardText">
                                 Сегодня плохое настроение, плохо ест, посмотрим как будет завтра
                             </div>
                         </div>
@@ -115,6 +167,33 @@
                     <div>
                         <div class="addImage">
                             <label for="photoModalToggle" class="addPhoto">+ Добавить изображение в галерею</label>
+                            <div>
+                                <input type="checkbox" id="photoModalToggle" style="display: none;">
+                                <div class="modal addPhotoModal">
+                                    <label class="modalBg" for="photoModalToggle"></label>
+                                    <div class="modalContent">
+                                        <label for="photoModalToggle" class="modalClose">&times;</label>
+                                        <h2>Добавить фото в галерею</h2>
+                                        <form class="modalForm">
+                                            <div class="modalPhoto">
+                                                <input type="file" id="petPhoto" name="petPhoto" style="display: none;">
+                                                <label for="petPhoto" class="photoLabel">
+                                                    <div class="uploadPhoto">
+                                                        <img src="img/photo.png">
+                                                        <span class="photoText">
+                                                            <span class="photoTitle">Фото питомца</span>
+                                                            <span class="photoHint">(нажмите или перетащите)</span>
+                                                        </span>
+
+                                                    </div>
+                                                </label>
+                                            </div>
+                                            <button type="submit" class="submitForm btn btnPrimary">+ Добавить
+                                                фото</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="gallery">
                             <img src="img/cat2.jpg">
@@ -127,32 +206,31 @@
                 <div class="doctorVisitHistory">
                     <div class="visitHistory">
                         <label for="visitModalToggle" class="addVisit">+ Добавить посещение</label>
-
-                        <div class="visit">
-                            <div class="visitHeader">
+                        <div class="visit card">
+                            <div class="cardHeader">
                                 1 октября 2025
                             </div>
-                            <div class="visitText">
+                            <div class="cardText">
                                 Плановый осмотр, проверено состояние зубов, ушей и шерсти. Вакцинация от бешенства,
                                 Гарик
                                 чувствует себя хорошо.
                             </div>
                         </div>
-                        <div class="visit">
-                            <div class="visitHeader">
+                        <div class="visit card">
+                            <div class="cardHeader">
                                 15 мая 2025
                             </div>
-                            <div class="visitText">
+                            <div class="cardText">
                                 Профилактическая обработка от блох и клещей. Кожа и шерсть в норме, признаков
                                 раздражения не
                                 выявлено.
                             </div>
                         </div>
-                        <div class="visit">
-                            <div class="visitHeader">
+                        <div class="visit card">
+                            <div class="cardHeader">
                                 20 марта 2025
                             </div>
-                            <div class="visitText">
+                            <div class="cardText">
                                 Проведена плановая чистка зубов под легкой седацией. Десны в норме, зубной камень
                                 удален,
                                 рекомендован мягкий корм на несколько дней.
@@ -177,122 +255,48 @@
             </div>
         </nav>
     </footer>
-    <input type="checkbox" id="modalToggle" style="display:none;">
-    <div class="addPetModal">
-        <label class="modalBg" for="modalToogle"></label>
-        <div class="modalContent">
-            <label for="modalToggle" class="modalClose">&times;</label>
-            <h2>Добавить нового питомца</h2>
-            <form class="addPetForm">
-                <div class="modalPhoto">
-                    <input type="file" id="petPhoto" name="petPhoto" style="display: none;">
-                    <label for="petPhoto" class="photoLabel">
-                        <div class="uploadPhoto">
-                            <img src="img/photo.png">
-                            <span class="photoText">
-                                <span class="photoTitle">Фото питомца</span>
-                                <span class="photoHint">(нажмите или перетащите)</span>
-                            </span>
-
-                        </div>
-                    </label>
-                </div>
-                <div class="inputData">
-                    <label>Кличка</label>
-                    <input type="text" placeholder="Введите кличку">
-                </div>
-                <div class="inputData">
-                    <label>Вид</label>
-                    <input type="text" placeholder="Введите вид">
-                </div>
-                <div class="inputData">
-                    <label>Порода</label>
-                    <input type="text" placeholder="Введите породу">
-                </div>
-                <div class="inputData">
-                    <label>Дата рождения</label>
-                    <input type="date" placeholder="Введите дату рождения">
-                </div>
-                <div class="inputData">
-                    <label>Пол</label>
-                    <input type="text" placeholder="Введите пол">
-                </div>
-                <div class="inputData">
-                    <label>Стерилизован ли ваш питомец</label>
-                    <input type="text" placeholder="Введите да/нет">
-                </div>
-                <div class="inputData">
-                    <label>Чипирован ли ваш питомец</label>
-                    <input type="text" placeholder="Введите да/нет">
-                </div>
-                <div class="inputData">
-                    <label>Особые приметы</label>
-                    <textarea rows="4" cols="30" placeholder="Особые приметы"></textarea>
-                </div>
-                <button type="submit" class="submitPet">+ Добавить питомца</button>
-            </form>
+    <div>
+        <input type="checkbox" id="noteModalToggle" style="display: none;">
+        <div class="modal addNoteModal">
+            <label class="modalBg" for="noteModalToggle"></label>
+            <div class="modalContent">
+                <label for="noteModalToggle" class="modalClose">&times;</label>
+                <h2>Добавить новую запись</h2>
+                <form class="modalForm">
+                    <div class="inputData">
+                        <label>Дата рождения</label>
+                        <input type="date" placeholder="Введите дату рождения">
+                    </div>
+                    <div class="inputData">
+                        <label>Описание</label>
+                        <textarea rows="4" cols="30" placeholder="Введите текст"></textarea>
+                    </div>
+                    <button type="submit" class="submitForm btn btnPrimary">+ Добавить
+                        запись</button>
+                </form>
+            </div>
         </div>
     </div>
-    <input type="checkbox" id="noteModalToggle" style="display: none;">
-    <div class="addNoteModal">
-        <label class="modalBg" for="noteModalToggle"></label>
-        <div class="modalContent">
-            <label for="noteModalToggle" class="modalClose">&times;</label>
-            <h2>Добавить новую запись</h2>
-            <form class="addNoteForm">
-                <div class="inputData">
-                    <label>Дата рождения</label>
-                    <input type="date" placeholder="Введите дату рождения">
-                </div>
-                <div class="inputData">
-                    <label>Описание</label>
-                    <textarea rows="4" cols="30" placeholder="Введите текст"></textarea>
-                </div>
-                <button type="submit" class="submitPet">+ Добавить запись</button>
-            </form>
-        </div>
-    </div>
-    <input type="checkbox" id="photoModalToggle" style="display: none;">
-    <div class="addPhotoModal">
-        <label class="modalBg" for="photoModalToggle"></label>
-        <div class="modalContent">
-            <label for="photoModalToggle" class="modalClose">&times;</label>
-            <h2>Добавить фото в галерею</h2>
-            <form>
-                <div class="modalPhoto">
-                    <input type="file" id="petPhoto" name="petPhoto" style="display: none;">
-                    <label for="petPhoto" class="photoLabel">
-                        <div class="uploadPhoto">
-                            <img src="img/photo.png">
-                            <span class="photoText">
-                                <span class="photoTitle">Фото питомца</span>
-                                <span class="photoHint">(нажмите или перетащите)</span>
-                            </span>
-
-                        </div>
-                    </label>
-                </div>
-                <button type="submit" class="submitPet">+ Добавить фото</button>
-            </form>
-        </div>
-    </div>
-    <input type="checkbox" id="visitModalToggle" style="display: none;">
-    <div class="addVisitModal">
-        <label class="modalBg" for="visitModalToggle"></label>
-        <div class="modalContent">
-            <label for="visitModalToggle" class="modalClose">&times;</label>
-            <h2>Добавить новое посещение</h2>
-            <form class="addVisitForm">
-                <div class="inputData">
-                    <label>Дата рождения</label>
-                    <input type="date" placeholder="Введите дату рождения">
-                </div>
-                <div class="inputData">
-                    <label>Описание</label>
-                    <textarea rows="4" cols="30" placeholder="Введите текст"></textarea>
-                </div>
-                <button type="submit" class="submitPet">+ Добавить посещение</button>
-            </form>
+    <div>
+        <input type="checkbox" id="visitModalToggle" style="display: none;">
+        <div class="modal addVisitModal">
+            <label class="modalBg" for="visitModalToggle"></label>
+            <div class="modalContent">
+                <label for="visitModalToggle" class="modalClose">&times;</label>
+                <h2>Добавить новое посещение</h2>
+                <form class="modalForm">
+                    <div class="inputData">
+                        <label>Дата рождения</label>
+                        <input type="date" placeholder="Введите дату рождения">
+                    </div>
+                    <div class="inputData">
+                        <label>Описание</label>
+                        <textarea rows="4" cols="30" placeholder="Введите текст"></textarea>
+                    </div>
+                    <button type="submit" class="submitForm btn btnPrimary">+ Добавить
+                        посещение</button>
+                </form>
+            </div>
         </div>
     </div>
 </body>
