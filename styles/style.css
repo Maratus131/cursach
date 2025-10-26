@@ -22,14 +22,14 @@ header .logo {
 }
 
 .logoText {
-    font-size: 20px;
+    font-size: 30px;
     color: #1E3B57;
     font-weight: 600;
 }
 
 .logo img {
-    width: 32px;
-    height: 32px;
+    width: 40px;
+    height: 40px;
 }
 
 .btn {
@@ -373,6 +373,7 @@ textarea {
     border-radius: 6px;
     border: 1px solid rgba(0, 0, 0, 0.2);
     font-size: 14px;
+    resize: none;
 }
 
 .inputData {
@@ -450,16 +451,30 @@ textarea {
 
 footer nav {
     padding: 32px;
+    display: flex;
+    justify-content: space-between;
 }
 
-.footerMenu {
-    opacity: 55%;
-    gap: 32px;
-    display: flex;
-}
 
 footer .logo {
     align-items: center;
+    display: flex; 
+}
+
+.copyright {
+    padding: 10px;
+    opacity: 55%;
+    font-weight: 600;
+    align-self: center;
+}
+
+.socialNetworks {
+    padding-top: 10px;
     display: flex;
-    padding-top: 16px;
+    gap:15px;
+}
+
+.socialNetworks img{
+    width: 30px;
+    height: 30px;
 }
