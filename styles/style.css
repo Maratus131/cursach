@@ -40,6 +40,10 @@ header .logo {
     cursor: pointer;
 }
 
+.btn:hover {
+    transform: scale(1.01);
+}
+
 .myPets {
     margin-right: 32px;
     cursor: default;
@@ -240,6 +244,10 @@ main {
 .addImage {
     color: #1E3B57;
     font-weight: 600;
+    cursor: pointer;
+}
+
+.addPhoto {
     cursor: pointer;
 }
 
