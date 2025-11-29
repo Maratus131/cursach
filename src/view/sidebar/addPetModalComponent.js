@@ -31,15 +31,27 @@ function createAddPetModalComponentTemplate() {
                     </div>
                     <div class="inputData">
                         <label>Пол</label>
-                        <input id="petGender" type="text" placeholder="Введите пол">
+                        <select id="petGender">
+                            <option value="">Выберите пол</option>
+                            <option value="Самец">Самец</option>
+                            <option value="Самка">Самка</option>
+                        </select>
                     </div>
                     <div class="inputData">
                         <label>Стерилизован ли ваш питомец</label>
-                        <input id="petSterilized" type="text" placeholder="Введите да/нет">
+                        <select id="petSterilized">
+                            <option value="">Выберите вариант</option>
+                            <option value="Да">Да</option>
+                            <option value="Нет">Нет</option>
+                        </select>
                     </div>
                     <div class="inputData">
                         <label>Чипирован ли ваш питомец</label>
-                        <input id="petChipped" type="text" placeholder="Введите да/нет">
+                        <select id="petChipped">
+                            <option value="">Выберите вариант</option>
+                            <option value="Да">Да</option>
+                            <option value="Нет">Нет</option>
+                        </select>
                     </div>
                     <div class="inputData">
                         <label>Особые приметы</label>
