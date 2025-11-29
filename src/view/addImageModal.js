@@ -38,25 +38,33 @@ export default class AddImageModalComponent extends AbstractComponent {
         const uploadArea = this.element.querySelector('.uploadPhoto');
         const previewImg = this.element.querySelector('.photoTrigger');
 
-        uploadArea?.addEventListener('click', () => fileInput.click());
+        if (uploadArea && fileInput) {
+            // Handle click to open file dialog
+            uploadArea.addEventListener('click', () => fileInput.click());
 
-        fileInput?.addEventListener('change', () => {
-            if (fileInput.files && fileInput.files[0]) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    previewImg.src = reader.result;
-                    previewImg.style.width = '100px';
-                    previewImg.style.height = '100px';
-                    previewImg.style.objectFit = 'cover';
-                    previewImg.style.padding = '0';
-                    previewImg.style.border = 'none';
+            // Handle file change (from click or drop)
+            fileInput.addEventListener('change', this.#handleFileSelect.bind(this, previewImg, uploadArea));
 
-                    const textSpan = uploadArea.querySelector('.photoText');
-                    if (textSpan) textSpan.style.display = 'none';
-                };
-                reader.readAsDataURL(fileInput.files[0]);
-            }
-        });
+            // Handle drag and drop
+            uploadArea.addEventListener('dragover', (evt) => {
+                evt.preventDefault();
+                uploadArea.classList.add('dragover'); // Optional: add a class for styling
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (evt) => {
+                evt.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = evt.dataTransfer.files;
+                if (files && files[0]) {
+                    fileInput.files = files;
+                    this.#handleFileSelect(previewImg, uploadArea);
+                }
+            });
+        }
 
         const btn = this.element.querySelector('.modalClose');
         btn?.addEventListener('click', this.#closeHandler.bind(this));
@@ -64,6 +72,26 @@ export default class AddImageModalComponent extends AbstractComponent {
 
     get template() {
         return createAddImageModalComponentTemplate();
+    }
+
+    #handleFileSelect(previewImg, uploadArea) {
+        const fileInput = this.element.querySelector('#petPhoto');
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (previewImg) {
+                    previewImg.src = reader.result;
+                    previewImg.style.width = '100px';
+                    previewImg.style.height = '100px';
+                    previewImg.style.objectFit = 'cover';
+                    previewImg.style.padding = '0';
+                    previewImg.style.border = 'none';
+                    const textSpan = uploadArea.querySelector('.photoText');
+                    if (textSpan) textSpan.style.display = 'none';
+                }
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
     }
 
     #submitHandler(evt) {

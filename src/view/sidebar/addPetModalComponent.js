@@ -71,7 +71,6 @@ export default class AddPetModalComponent extends AbstractComponent {
         super();
         this.#onSubmit = onSubmit;
 
-
         const form = this.element.querySelector('.modalForm');
         if (form) {
             form.addEventListener('submit', this.#submitHandler.bind(this));
@@ -83,22 +82,25 @@ export default class AddPetModalComponent extends AbstractComponent {
 
         if (uploadArea && fileInput) {
             uploadArea.addEventListener('click', () => fileInput.click());
-            fileInput.addEventListener('change', () => {
-                if (fileInput.files && fileInput.files[0]) {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        if (previewImg) {
-                            previewImg.src = reader.result;
-                            previewImg.style.width = '100px';
-                            previewImg.style.height = '100px';
-                            previewImg.style.objectFit = 'cover';
-                            previewImg.style.padding = '0';
-                            previewImg.style.border = 'none';
-                            const textSpan = uploadArea.querySelector('.photoText');
-                            if (textSpan) textSpan.style.display = 'none';
-                        }
-                    };
-                    reader.readAsDataURL(fileInput.files[0]);
+
+            fileInput.addEventListener('change', this.#handleFileSelect.bind(this, previewImg, uploadArea));
+
+            uploadArea.addEventListener('dragover', (evt) => {
+                evt.preventDefault();
+                uploadArea.classList.add('dragover');
+            });
+
+            uploadArea.addEventListener('dragleave', () => {
+                uploadArea.classList.remove('dragover');
+            });
+
+            uploadArea.addEventListener('drop', (evt) => {
+                evt.preventDefault();
+                uploadArea.classList.remove('dragover');
+                const files = evt.dataTransfer.files;
+                if (files && files[0]) {
+                    fileInput.files = files; 
+                    this.#handleFileSelect(previewImg, uploadArea);
                 }
             });
         }
@@ -145,6 +147,26 @@ export default class AddPetModalComponent extends AbstractComponent {
             }
 
             this.element.remove();
+        }
+    }
+
+    #handleFileSelect(previewImg, uploadArea) {
+        const fileInput = this.element.querySelector('#petPhoto');
+        if (fileInput.files && fileInput.files[0]) {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (previewImg) {
+                    previewImg.src = reader.result;
+                    previewImg.style.width = '100px';
+                    previewImg.style.height = '100px';
+                    previewImg.style.objectFit = 'cover';
+                    previewImg.style.padding = '0';
+                    previewImg.style.border = 'none';
+                    const textSpan = uploadArea.querySelector('.photoText');
+                    if (textSpan) textSpan.style.display = 'none';
+                }
+            };
+            reader.readAsDataURL(fileInput.files[0]);
         }
     }
 
