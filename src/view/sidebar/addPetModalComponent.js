@@ -99,7 +99,7 @@ export default class AddPetModalComponent extends AbstractComponent {
                 uploadArea.classList.remove('dragover');
                 const files = evt.dataTransfer.files;
                 if (files && files[0]) {
-                    fileInput.files = files; 
+                    fileInput.files = files;
                     this.#handleFileSelect(previewImg, uploadArea);
                 }
             });
@@ -133,19 +133,12 @@ export default class AddPetModalComponent extends AbstractComponent {
             const reader = new FileReader();
             reader.onload = (e) => {
                 petData.photo = e.target.result;
-                if (typeof this.#onSubmit === 'function') {
-                    this.#onSubmit(petData);
-                }
-
+                this.#onSubmit(petData);
                 this.element.remove();
-
             };
             reader.readAsDataURL(fileInput.files[0]);
         } else {
-            if (typeof this.#onSubmit === 'function') {
-                this.#onSubmit(petData);
-            }
-
+            this.#onSubmit(petData);
             this.element.remove();
         }
     }
@@ -174,5 +167,4 @@ export default class AddPetModalComponent extends AbstractComponent {
         evt.preventDefault();
         this.element.remove();
     }
-
 }

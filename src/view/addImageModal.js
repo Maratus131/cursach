@@ -39,16 +39,13 @@ export default class AddImageModalComponent extends AbstractComponent {
         const previewImg = this.element.querySelector('.photoTrigger');
 
         if (uploadArea && fileInput) {
-            // Handle click to open file dialog
             uploadArea.addEventListener('click', () => fileInput.click());
 
-            // Handle file change (from click or drop)
             fileInput.addEventListener('change', this.#handleFileSelect.bind(this, previewImg, uploadArea));
 
-            // Handle drag and drop
             uploadArea.addEventListener('dragover', (evt) => {
                 evt.preventDefault();
-                uploadArea.classList.add('dragover'); // Optional: add a class for styling
+                uploadArea.classList.add('dragover');
             });
 
             uploadArea.addEventListener('dragleave', () => {
@@ -104,11 +101,7 @@ export default class AddImageModalComponent extends AbstractComponent {
 
             reader.onload = (e) => {
                 const base64 = e.target.result;
-
-                if (typeof this.#onSubmit === 'function') {
-                    this.#onSubmit({ imageUrl: base64 });
-                }
-
+                this.#onSubmit({ imageUrl: base64 });
                 this.element.remove();
             };
 

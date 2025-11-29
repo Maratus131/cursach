@@ -65,7 +65,6 @@ export default class DiaryComponent extends AbstractComponent {
 
     setGalleryClickHandler(callback) {
         this.#onGalleryClick = (event) => {
-            // Проверяем, что клик не по кнопке добавления изображения, чтобы избежать конфликтов
             if (!event.target.closest('.addImage')) {
                 callback(event);
             }

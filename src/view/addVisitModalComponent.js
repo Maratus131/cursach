@@ -34,7 +34,7 @@ export default class AddVisitModalComponent extends AbstractComponent {
         if (dateInput) {
             const today = new Date();
             const yyyy = today.getFullYear();
-            const mm = String(today.getMonth() + 1).padStart(2, '0'); // месяцы с 0
+            const mm = String(today.getMonth() + 1).padStart(2, '0');
             const dd = String(today.getDate()).padStart(2, '0');
             dateInput.value = `${yyyy}-${mm}-${dd}`;
         }
@@ -64,10 +64,7 @@ export default class AddVisitModalComponent extends AbstractComponent {
 
         const noteData = { date, text };
 
-        if (typeof this.#onSubmit === 'function') {
-            this.#onSubmit(noteData);
-        }
-
+        this.#onSubmit(noteData);
         this.element.remove();
     }
 

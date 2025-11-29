@@ -31,6 +31,5 @@ export default class NotificationComponent extends AbstractComponent {
     #closeHandler(evt) {
         evt.preventDefault();
         this.element.remove();
-        this.removeElement();
     }
 }

@@ -64,10 +64,7 @@ export default class AddNoteModalComponent extends AbstractComponent {
 
         const noteData = { date, text };
 
-        if (typeof this.#onSubmit === 'function') {
-            this.#onSubmit(noteData);
-        }
-
+        this.#onSubmit(noteData);
         this.element.remove();
     }
 
