@@ -94,19 +94,16 @@ export default class AddImageModalComponent extends AbstractComponent {
     #submitHandler(evt) {
         evt.preventDefault();
 
-        const fileInput = this.element.querySelector('#petPhoto');
+        const fileInput = this.element.querySelector('#imageFile');
 
         if (fileInput && fileInput.files && fileInput.files[0]) {
             const reader = new FileReader();
-
             reader.onload = (e) => {
                 const base64 = e.target.result;
                 this.#onSubmit({ imageUrl: base64 });
                 this.element.remove();
             };
-
             reader.readAsDataURL(fileInput.files[0]);
-
         } else {
             this.element.remove();
         }
