@@ -1,14 +1,29 @@
-import { pets } from "../mocks/pets.js";
 import { generateID } from "../utils.js";
+import Observable from "../framework/observable.js";
+import { UserAction, UpdateType } from "../const.js";
 
-export default class PetModel {
-    #pets = pets;
-    #observers = [];
+export default class PetModel extends Observable {
+    #petsApiService = null;
+    #pets = [];
     #selectedPetId = null;
     #activeTab = 'diary';
 
-    constructor() {
-        this.#selectedPetId = this.#pets[0].id;
+    constructor({ petsApiService }) {
+        super();
+        this.#petsApiService = petsApiService;
+    }
+
+    async init() {
+        try {
+            const pets = await this.#petsApiService.pets;
+            this.#pets = pets;
+            this.#selectedPetId = pets[0]?.id;
+        } catch (e) {
+            console.error("Ошибка загрузки питомцев:", e);
+            this.#pets = [];
+        }
+
+        this._notify(UpdateType.INIT);
     }
 
     get pets() {
@@ -25,33 +40,26 @@ export default class PetModel {
 
     setActiveTab(tab) {
         this.#activeTab = tab;
-        this._notifyObservers();
+        this._notify(UserAction.CHANGE_TAB, tab);
     }
 
     setSelectedPet(id) {
         const petExists = this.#pets.some(pet => pet.id === id);
         if (petExists) {
             this.#selectedPetId = id;
-            this._notifyObservers();
         } else {
             console.error(`Питомец с ID: ${id} не найден.`)
         }
+
+        this._notify(UserAction.SELECT_PET, id);
     }
 
-    addDiaryNote(petId, note) {
-        const pet = this.#pets.find(p => p.id === petId);
-        if (pet) {
-            pet.diary.push(note);
-            this._notifyObservers();
-        }
-    }
-
-    addPet(pet) {
+    async addPet(pet) {
         const id = pet.id || generateID();
         const newPet = {
             id,
             name: pet.name || 'Без имени',
-            photo: pet.photo || './img/avatar.jpg',
+            photo: pet.photo,
             breed: pet.breed || '',
             birthday: pet.birthday || '',
             gender: pet.gender || '',
@@ -63,34 +71,76 @@ export default class PetModel {
             gallery: pet.gallery || [],
             visits: pet.visits || []
         };
+        this._notify(UserAction.LOADING_START);
 
-        this.#pets.push(newPet);
-        this._notifyObservers();
-        return id;
-    }
-
-    addGalleryImage(petId, imageUrl) {
-        const pet = this.#pets.find(p => p.id === petId);
-        if (pet) {
-            pet.gallery.push(imageUrl);
-            this._notifyObservers();
+        try {
+            const createdPet = await this.#petsApiService.addPet(newPet);
+            this.#pets.push(createdPet);
+            this._notify(UserAction.ADD_PET, createdPet);
+            return createdPet;
+        } catch (err) {
+            console.error("Ошибка при добавлении питомца:", err);
+            throw err;
+        } finally {
+            this._notify(UserAction.LOADING_END);
         }
     }
 
-    addVisit(petId, visit) {
-        const pet = this.#pets.find(p => p.id === petId);
-        if (pet) {
-            pet.visits.push(visit);
-            this._notifyObservers();
+    async addGalleryImage(petId, imageUrl) {
+        const petToUpdate = this.#pets.find(p => p.id === petId);
+        
+        petToUpdate.gallery.push(imageUrl);
+        this._notify(UserAction.ADD_GALLERY_IMAGE, petToUpdate);
+        
+        this._notify(UserAction.LOADING_START);
+        try {
+            await this.#petsApiService.updatePet(petToUpdate); 
+        } catch (err) {
+            console.error("Ошибка сохранения изображения в галерее на сервере:", err);
+            petToUpdate.gallery.pop();
+            this._notify(UserAction.UPDATE_PET);
+            throw err;
+        } finally {
+            this._notify(UserAction.LOADING_END);
         }
     }
 
-    addObserver(observer) {
-        this.#observers.push(observer);
+    async addDiaryNote(petId, note) {
+        const petToUpdate = this.#pets.find(p => p.id === petId);
+
+        petToUpdate.diary.push(note);
+        this._notify(UserAction.ADD_DIARY_NOTE, petToUpdate);
+
+        this._notify(UserAction.LOADING_START);
+        try {
+            await this.#petsApiService.updatePet(petToUpdate);
+        } catch (err) {
+            console.error("Ошибка сохранения записи в дневнике на сервере:", err);
+            petToUpdate.diary.pop();
+            this._notify(UserAction.UPDATE_PET);
+            throw err;
+        } finally {
+            this._notify(UserAction.LOADING_END);
+        }
     }
 
-    removeObserver(observer) {
-        this.#observers = this.#observers.filter((obs) => obs !== observer);
+    async addVisit(petId, visit) {
+        const petToUpdate = this.#pets.find(p => p.id === petId);
+
+        petToUpdate.visits.push(visit);
+        this._notify(UserAction.ADD_VISIT, petToUpdate);
+
+        this._notify(UserAction.LOADING_START);
+        try {
+            await this.#petsApiService.updatePet(petToUpdate);
+        } catch (err) {
+            console.error("Ошибка сохранения записи в дневнике на сервере:", err);
+            petToUpdate.diary.pop();
+            this._notify(UserAction.UPDATE_PET);
+            throw err;
+        } finally {
+            this._notify(UserAction.LOADING_END);
+        }
     }
 
     #computeAge(birthday) {
@@ -99,9 +149,5 @@ export default class PetModel {
         if (isNaN(b)) return 0;
         const diff = Date.now() - b.getTime();
         return Math.floor(diff / (365.25 * 24 * 3600 * 1000));
-    }
-
-    _notifyObservers() {
-        this.#observers.forEach((observer) => observer())
     }
 }

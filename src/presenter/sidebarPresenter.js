@@ -15,8 +15,14 @@ export default class SidebarPresenter {
         this.#petModel.addObserver(this.#handleModelChange.bind(this));
     }
 
-    init() {
-        this.#renderSidebar();
+    async init() {
+        try {
+            await this.#petModel.init(); 
+            this.#renderSidebar();
+        } catch (err) {
+            console.error('Ошибка при инициализации сайдбара/модели питомцев: ', err);
+            this.#renderSidebar();
+        }
     }
 
     #renderSidebar() {

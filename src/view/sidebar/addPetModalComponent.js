@@ -1,4 +1,5 @@
 import { AbstractComponent } from "../../framework/view/abstractComponent.js";
+import { compressImage } from "../../utils.js";
 
 function createAddPetModalComponentTemplate() {
     return `
@@ -129,14 +130,12 @@ export default class AddPetModalComponent extends AbstractComponent {
             gallery: []
         };
 
-        if (fileInput && fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-            reader.onload = (e) => {
-                petData.photo = e.target.result;
+        if (fileInput.files[0]) {
+            compressImage(fileInput.files[0]).then((compressed) => {
+                petData.photo = compressed;
                 this.#onSubmit(petData);
                 this.element.remove();
-            };
-            reader.readAsDataURL(fileInput.files[0]);
+            });
         } else {
             this.#onSubmit(petData);
             this.element.remove();
@@ -145,7 +144,7 @@ export default class AddPetModalComponent extends AbstractComponent {
 
     #handleFileSelect(previewImg, uploadArea) {
         const fileInput = this.element.querySelector('#petPhoto');
-        if (fileInput.files && fileInput.files[0]) {
+        if (fileInput.files[0]) {
             const reader = new FileReader();
             reader.onload = () => {
                 if (previewImg) {

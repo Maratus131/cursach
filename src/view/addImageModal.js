@@ -1,4 +1,5 @@
 import { AbstractComponent } from "../framework/view/abstractComponent.js";
+import { compressImage } from "../utils.js";
 
 function createAddImageModalComponentTemplate() {
     return `
@@ -96,18 +97,14 @@ export default class AddImageModalComponent extends AbstractComponent {
 
         const fileInput = this.element.querySelector('#petPhoto');
 
-        if (fileInput && fileInput.files && fileInput.files[0]) {
-            const reader = new FileReader();
-
-            reader.onload = (e) => {
-                const base64 = e.target.result;
-                this.#onSubmit({ imageUrl: base64 });
+        if (fileInput.files[0]) {
+            compressImage(fileInput.files[0]).then((compressed) => {
+                petData.photo = compressed;
+                this.#onSubmit(petData);
                 this.element.remove();
-            };
-
-            reader.readAsDataURL(fileInput.files[0]);
-
+            });
         } else {
+            this.#onSubmit(petData);
             this.element.remove();
         }
     }

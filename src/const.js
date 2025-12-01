@@ -1,0 +1,16 @@
+export const UserAction = {
+    UPDATE_PET: 'UPDATE_PET',
+    ADD_PET: 'ADD_PET',
+    DELETE_PET: 'DELETE_PET',
+    LOADING_START: 'LOADING_START',
+    LOADING_END: 'LOADING_END',
+    ADD_GALLERY_IMAGE: 'ADD_GALLERY_IMAGE',
+    CHANGE_TAB: 'CHANGE_TAB',
+    SELECT_TAB: 'SELECT_TAB',
+    ADD_DIARY_NOTE: 'ADD_DIARY_NOTE',
+    ADD_VISIT: 'ADD_VISIT'
+};
+
+export const UpdateType = {
+    INIT: 'INIT'
+}

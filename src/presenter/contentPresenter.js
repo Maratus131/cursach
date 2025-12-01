@@ -10,6 +10,7 @@ import AddImageModalComponent from "../view/addImageModal.js";
 import GalleryModalComponent from "../view/galleryModal.js";
 import { parseDate, isDateOverdue } from "../utils.js";
 import NotificationComponent from "../view/notificationComponent.js";
+import { UserAction } from "../const.js";
 
 
 export default class ContentPresenter {
@@ -27,8 +28,14 @@ export default class ContentPresenter {
         this.#petModel.addObserver(this.#handleModelChange.bind(this));
     }
 
-    init() {
-        this.#renderContent();
+    async init() {
+        try {
+            await this.#petModel.init();
+            this.#renderContent();
+        } catch (err) {
+            console.error('Ошибка при инициализации сайдбара/модели питомцев: ', err);
+            this.#renderContent();
+        }
     }
 
     #renderContent() {
@@ -113,10 +120,10 @@ export default class ContentPresenter {
 
     #handleAddNote() {
         const modal = new AddNoteModalComponent({
-            onSubmit: (noteData) => {
+            onSubmit: async (noteData) => {
                 const selectedPet = this.#getSelectedPet();
                 if (selectedPet) {
-                    this.#petModel.addDiaryNote(selectedPet.id, noteData);
+                    await this.#petModel.addDiaryNote(selectedPet.id, noteData);
                 }
             }
         });
@@ -140,10 +147,10 @@ export default class ContentPresenter {
 
     #handleAddVisit() {
         const modal = new AddVisitModalComponent({
-            onSubmit: (visitData) => {
+            onSubmit: async (visitData) => {
                 const selectedPet = this.#getSelectedPet();
                 if (selectedPet) {
-                    this.#petModel.addVisit(selectedPet.id, visitData);
+                    await this.#petModel.addVisit(selectedPet.id, visitData);
                 }
             }
         });
@@ -156,8 +163,15 @@ export default class ContentPresenter {
         document.body.appendChild(modal.element);
     }
 
-    #handleModelChange() {
-        this.#renderContent();
+    #handleModelChange(event) {
+        switch (event) {
+            case UserAction.ADD_VISIT:
+            case UserAction.SELECT_PET:
+            case UserAction.ADD_DIARY_NOTE:
+            case UserAction.ADD_GALLERY_IMAGE:
+                this.#renderContent();
+                break;
+        }
     }
 
     #getSelectedPet() {
