@@ -99,12 +99,13 @@ export default class AddImageModalComponent extends AbstractComponent {
 
         if (fileInput.files[0]) {
             compressImage(fileInput.files[0]).then((compressed) => {
-                petData.photo = compressed;
-                this.#onSubmit(petData);
+                const imageData = {
+                    imageUrl: compressed
+                };
+                this.#onSubmit(imageData);
                 this.element.remove();
             });
         } else {
-            this.#onSubmit(petData);
             this.element.remove();
         }
     }
