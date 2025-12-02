@@ -66,7 +66,6 @@ export default class PetModel extends Observable {
             isSterilized: pet.isSterilized || 'нет',
             isChipped: pet.isChipped || 'нет',
             specialFeatures: pet.specialFeatures || '',
-            age: (typeof pet.age === 'number') ? pet.age : this.#computeAge(pet.birthday),
             diary: pet.diary || [],
             gallery: pet.gallery || [],
             visits: pet.visits || []
@@ -88,13 +87,13 @@ export default class PetModel extends Observable {
 
     async addGalleryImage(petId, imageUrl) {
         const petToUpdate = this.#pets.find(p => p.id === petId);
-        
+
         petToUpdate.gallery.push(imageUrl);
         this._notify(UserAction.ADD_GALLERY_IMAGE, petToUpdate);
-        
+
         this._notify(UserAction.LOADING_START);
         try {
-            await this.#petsApiService.updatePet(petToUpdate); 
+            await this.#petsApiService.updatePet(petToUpdate);
         } catch (err) {
             console.error("Ошибка сохранения изображения в галерее на сервере:", err);
             petToUpdate.gallery.pop();
@@ -143,11 +142,33 @@ export default class PetModel extends Observable {
         }
     }
 
-    #computeAge(birthday) {
-        if (!birthday) return 0;
-        const b = new Date(birthday);
-        if (isNaN(b)) return 0;
-        const diff = Date.now() - b.getTime();
-        return Math.floor(diff / (365.25 * 24 * 3600 * 1000));
+    async updatePet(petId, updatedData) {
+        const petIndex = this.#pets.findIndex(p => p.id === petId);
+        if (petIndex === -1) {
+            console.error(`Питомец с id ${petId} не найден`);
+            return;
+        }
+
+        const oldPet = this.#pets[petIndex];
+        const updatedPet = { ...oldPet, ...updatedData };
+
+        this._notify(UserAction.LOADING_START);
+
+        try {
+            const savedPet = await this.#petsApiService.updatePet(updatedPet);
+            this.#pets[petIndex] = savedPet;
+
+            this._notify(UserAction.UPDATE_PET, savedPet);
+            return savedPet;
+
+        } catch (err) {
+            console.error("Ошибка обновления питомца:", err);
+            this._notify(UserAction.UPDATE_PET, oldPet);
+            throw err;
+
+        } finally {
+            this._notify(UserAction.LOADING_END);
+        }
     }
+
 }

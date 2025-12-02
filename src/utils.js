@@ -1,31 +1,31 @@
 export function generateID() {
-    return crypto.randomUUID();
+  return crypto.randomUUID();
 }
 
 export function getYearWord(age) {
-    age = Math.abs(age) % 100;
-    const lastDigit = age % 10;
+  age = Math.abs(age) % 100;
+  const lastDigit = age % 10;
 
-    if (age > 10 && age < 20) return 'лет';
-    if (lastDigit === 1) return 'год';
-    if (lastDigit >= 2 && lastDigit <= 4) return 'года';
-    return 'лет';
+  if (age > 10 && age < 20) return 'лет';
+  if (lastDigit === 1) return 'год';
+  if (lastDigit >= 2 && lastDigit <= 4) return 'года';
+  return 'лет';
 }
 
 export const parseDate = (dateString) => {
-    const [day, month, year] = dateString.split('-').map(Number);
-    return new Date(year, month - 1, day);
+  const [day, month, year] = dateString.split('-').map(Number);
+  return new Date(year, month - 1, day);
 }
 
 export const isDateOverdue = (dateString) => {
-    if (!dateString) return true;
+  if (!dateString) return true;
 
-    const visitDate = parseDate(dateString);
-    const currentDate = new Date();
+  const visitDate = parseDate(dateString);
+  const currentDate = new Date();
 
-    const thresholdDate = new Date(currentDate.setMonth(currentDate.getMonth() - 2));
+  const thresholdDate = new Date(currentDate.setMonth(currentDate.getMonth() - 2));
 
-    return visitDate < thresholdDate;
+  return visitDate < thresholdDate;
 }
 
 export function compressImage(file, maxWidth = 400, quality = 0.7) {
@@ -58,4 +58,13 @@ export function compressImage(file, maxWidth = 400, quality = 0.7) {
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
+}
+
+export function computeAge(birthday) {
+  if (!birthday) return 0;
+  const [dd, mm, yyyy] = birthday.split('-');
+  const b = new Date(`${yyyy}-${mm}-${dd}`);
+  if (isNaN(b)) return 0;
+  const diff = Date.now() - b.getTime();
+  return Math.floor(diff / (365.25 * 24 * 3600 * 1000));
 }

@@ -13,7 +13,9 @@ function createDiaryTemplate(notes, images = []) {
                 <label class="addNote">+ Добавить запись в дневник</label>
                 ${notes.map(note => `
                     <div class="note card">
-                        <div class="cardHeader">${note.date}</div>
+                        <div class="cardHeader">
+                        ${note.date}
+                        </div>
                         <div class="cardText">${note.text}</div>
                     </div>
                 `).join('')}
@@ -40,6 +42,7 @@ export default class DiaryComponent extends AbstractComponent {
     #onAddNoteClick = null;
     #onAddImageClick = null;
     #onGalleryClick = null;
+    #onDeleteNoteClick = null;
 
     constructor(notes, images) {
         super();
@@ -71,5 +74,17 @@ export default class DiaryComponent extends AbstractComponent {
         };
         const gallery = this.element.querySelector('.gallery');
         if (gallery) gallery.addEventListener('click', this.#onGalleryClick);
+    }
+
+    setDeleteNoteClickHandler(callback) {
+        this.#onDeleteNoteClick = (event) => {
+            const noteCard = event.target.closest('.note.card');
+            if (!noteCard) return;
+            const noteId = noteCard.dataset.noteId;
+            callback(noteId);
+        };
+
+        const deleteButtons = this.element.querySelectorAll('.deleteNote');
+        deleteButtons.forEach(btn => btn.addEventListener('click', this.#onDeleteNoteClick));
     }
 }

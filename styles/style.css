@@ -517,3 +517,9 @@ footer .logo {
     color: #999;
     line-height: 1;
 }
+
+.editPet {
+    margin-left: 14px;
+    margin-bottom: 16px;
+    font-size: 14px;
+}

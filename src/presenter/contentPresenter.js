@@ -11,7 +11,7 @@ import GalleryModalComponent from "../view/galleryModal.js";
 import { parseDate, isDateOverdue } from "../utils.js";
 import NotificationComponent from "../view/notificationComponent.js";
 import { UserAction } from "../const.js";
-
+import EditPetModalComponent from "../view/editPetModel.js";
 
 export default class ContentPresenter {
     #container = null;
@@ -51,6 +51,11 @@ export default class ContentPresenter {
 
         this.#petInfoComponent = new PetInfoComponent(selectedPet);
         render(this.#petInfoComponent, this.#container, RenderPosition.BEFOREEND);
+
+        this.#petInfoComponent.setEditClickHandler(() => {
+            this.#handleEditPet(selectedPet);
+        });
+
 
         const activeTab = this.#petModel.activeTab;
         this.#navigationComponent = new NavigationComponent(activeTab);
@@ -144,6 +149,16 @@ export default class ContentPresenter {
         document.body.appendChild(modal.element);
     }
 
+    #handleEditPet(pet) {
+        const modal = new EditPetModalComponent(pet, {
+            onSubmit: async (updatedData) => {
+                await this.#petModel.updatePet(pet.id, updatedData);
+            }
+        });
+
+        document.body.appendChild(modal.element);
+    }
+
 
     #handleAddVisit() {
         const modal = new AddVisitModalComponent({
@@ -166,6 +181,7 @@ export default class ContentPresenter {
     #handleModelChange(event) {
         switch (event) {
             case UserAction.ADD_VISIT:
+            case UserAction.UPDATE_PET:
             case UserAction.SELECT_PET:
             case UserAction.ADD_DIARY_NOTE:
             case UserAction.ADD_GALLERY_IMAGE:

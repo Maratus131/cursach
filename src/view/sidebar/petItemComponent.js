@@ -1,5 +1,5 @@
 import { AbstractComponent } from "../../framework/view/abstractComponent.js";
-import { getYearWord } from "../../utils.js";
+import { getYearWord, computeAge } from "../../utils.js";
 
 function createPetItemTemplate(pet, isActive = false) {
     return `
@@ -7,7 +7,7 @@ function createPetItemTemplate(pet, isActive = false) {
             <img src="${pet.photo}" alt="Фото питомца">
             <div class="briefPetInfo">
                 <div class="petName">${pet.name}</div>
-                <div class="petBreed">${pet.breed}, ${pet.age} ${getYearWord(pet.age)}</div>
+                <div class="petBreed">${pet.breed}, ${computeAge(pet.birthday)} ${getYearWord(computeAge(pet.birthday))}</div>
             </div>
         </div>
     `;

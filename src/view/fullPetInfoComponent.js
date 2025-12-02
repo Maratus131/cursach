@@ -14,6 +14,7 @@ function createFullPetInfoComponentTemplate(pet) {
                     <div class="isChipped">Чип: ${pet.isChipped}</div>
                     <div class="specialFeatures">Особые приметы: ${pet.specialFeatures}</div>
                 </div>
+                <button class="editPet btn btnPrimary">Редактировать</button>
             </div>
     `
     );
@@ -26,8 +27,13 @@ export default class PetInfoComponent extends AbstractComponent {
         super();
         this.#pet = pet;
     }
-    
+
     get template() {
         return createFullPetInfoComponentTemplate(this.#pet);
+    }
+
+    setEditClickHandler(callback) {
+        this.element.querySelector('.editPet')
+            .addEventListener('click', callback);
     }
 }

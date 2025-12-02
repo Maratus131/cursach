@@ -11,7 +11,7 @@ function createSidebarComponentTemplate(pet) {
 
             </div>
             <button class="addPet btn btnPrimary" for="modalToggle">+ Добавить питомца</button>
-        </aside>
+            </aside>
     `
     );
 }

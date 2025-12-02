@@ -1,5 +1,5 @@
 import { AbstractComponent } from '../framework/view/abstractComponent.js'
-import { getYearWord } from '../utils.js';
+import { getYearWord, computeAge } from '../utils.js';
 
 function createPetTitleComponentTemplate(pet) {
     return (
@@ -7,7 +7,7 @@ function createPetTitleComponentTemplate(pet) {
         <div class="petTitle">
                 <h1>${pet.name}</h1>
                 <div class="breed">
-                    ${pet.breed}, ${pet.age} ${getYearWord(pet.age)}
+                    ${pet.breed}, ${computeAge(pet.birthday)}  ${getYearWord(computeAge(pet.birthday))}
                 </div>
         </div>
     `

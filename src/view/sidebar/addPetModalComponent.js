@@ -117,11 +117,20 @@ export default class AddPetModalComponent extends AbstractComponent {
     #submitHandler(evt) {
         evt.preventDefault();
 
+        const raw = this.element.querySelector('#petBirthday').value;
+        let birthday = "";
+
+        if (raw) {
+            const [yyyy, mm, dd] = raw.split("-");
+            birthday = `${dd}-${mm}-${yyyy}`; 
+        }
+
         const fileInput = this.element.querySelector('#petPhoto');
+
         const petData = {
             name: this.element.querySelector('#petName').value.trim(),
             breed: this.element.querySelector('#petBreed').value.trim(),
-            birthday: this.element.querySelector('#petBirthday').value,
+            birthday,
             gender: this.element.querySelector('#petGender').value.trim(),
             isSterilized: this.element.querySelector('#petSterilized').value.trim(),
             isChipped: this.element.querySelector('#petChipped').value.trim(),
@@ -141,6 +150,7 @@ export default class AddPetModalComponent extends AbstractComponent {
             this.element.remove();
         }
     }
+
 
     #handleFileSelect(previewImg, uploadArea) {
         const fileInput = this.element.querySelector('#petPhoto');
