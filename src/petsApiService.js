@@ -32,11 +32,4 @@ export default class PetsApiService extends ApiService {
         });
         return ApiService.parseResponse(response);
     }
-
-    async deleteTask(petId) {
-        await this._load({
-            url: `pet/${petId}`,
-            method: Method.DELETE,
-        });
-    }
 }
